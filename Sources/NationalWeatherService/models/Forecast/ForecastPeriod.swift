@@ -12,7 +12,7 @@ extension Forecast {
         public enum CodingKeys: String, CodingKey {
             case name, startTime, endTime, isDaytime
             case temperature, temperatureUnit, windSpeed, windDirection
-            case shortForecast, detailedForecast
+            case icon, shortForecast, detailedForecast
         }
 
         public let name: String?
@@ -22,6 +22,8 @@ extension Forecast {
         public let temperature: Measurement<UnitTemperature>
         public let windSpeed: Wind
 
+        public let conditions: [Condition]
+        public let icon: URL
         public let shortForecast: String
         public let detailedForecast: String?
 
@@ -45,6 +47,9 @@ extension Forecast {
             let windSpeedValue = try container.decode(String.self, forKey: .windSpeed)
             let windDirection = try container.decodeIfPresent(String.self, forKey: .windDirection) ?? ""
             self.windSpeed = try Wind(from: windSpeedValue, direction: windDirection)
+
+            self.icon = try container.decode(URL.self, forKey: .icon)
+            self.conditions = Condition.parseFrom(nwsAPIIconURL: self.icon)
 
             self.shortForecast = try container.decode(String.self, forKey: .shortForecast)
             self.detailedForecast = try container.decode(String.self, forKey: .detailedForecast)
