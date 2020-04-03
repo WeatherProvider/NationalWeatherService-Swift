@@ -33,7 +33,12 @@ public struct NationalWeatherService {
     }
 
     public func loadNWS(at url: URL, then handler: @escaping GeoJSONHandler) {
-        var request = URLRequest(url: url)
+        var components = URLComponents(url: url, resolvingAgainstBaseURL: false)!
+        components.queryItems = [
+            URLQueryItem(name: "units", value: "us")
+        ]
+
+        var request = URLRequest(url: components.url!)
         request.addValue(userAgent, forHTTPHeaderField: "User-Agent")
         request.addValue("application/geo+json", forHTTPHeaderField: "Accept")
 
