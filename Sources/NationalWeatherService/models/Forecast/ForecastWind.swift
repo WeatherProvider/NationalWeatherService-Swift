@@ -9,19 +9,28 @@ import Foundation
 
 extension Forecast {
     public enum Wind: CustomStringConvertible {
-        case single(Measurement<UnitSpeed>, direction: String)
-        case range(lhs: Measurement<UnitSpeed>, rhs: Measurement<UnitSpeed>, direction: String)
+        case single(Measurement<UnitSpeed>, direction: String?)
+        case range(lhs: Measurement<UnitSpeed>, rhs: Measurement<UnitSpeed>, direction: String?)
 
-        public init(from windText: String, direction: String) throws {
+        /// A structured model for wind forecasts.
+        ///
+        /// ## Example Accepted Formats
+        /// - `10 mph`
+        /// - `10 to 20 mph`
+        /// - `10 - 20 mph`
+        /// - `15 km/h`
+        /// - `15` (parses as 15 km/h)
+        /// - `15 - 25` (parses as 15 - 25 km/h)
+        ///
+        /// - parameter windText: Text to parse into forecasted wind data. If `mph` is the suffix,
+        /// then the speed unit will be miles per hour. Otherwise, it will use kilometers per hour.
+        /// - parameter direction: Text representing wind direction, this will be used verbatim.
+        public init(from windText: String, direction: String?) throws {
+            let unit: UnitSpeed = windText.hasSuffix("mph") ? .milesPerHour : .kilometersPerHour
             let split = windText.split(separator: " ")
 
-            guard let unitString = split.last, !unitString.isEmpty else {
-                throw DecodingError.dataCorrupted(DecodingError.Context(codingPath: [], debugDescription: "Expected a speed unit string but found an empty String instead."))
-            }
-
-            let unit: UnitSpeed = unitString == "mph" ? .milesPerHour : .kilometersPerHour
-
-            if windText.contains("to") {
+            // weather.gov API uses the "to" keyword.
+            if windText.contains("to") || windText.contains("-") {
                 let lhsString = split[0]
                 let rhsString = split[2]
 
@@ -50,9 +59,19 @@ extension Forecast {
             let formatter = MeasurementFormatter()
             switch self {
             case .single(let speed, let direction):
-                return formatter.string(from: speed) + " (\(direction))"
+                var text = formatter.string(from: speed)
+                if let direction = direction, !direction.isEmpty {
+                    text += " (\(direction))"
+                }
+
+                return text
             case .range(let lhs, let rhs, let direction):
-                return formatter.string(from: lhs) + " - " + formatter.string(from: rhs) + " (\(direction))"
+                var text = formatter.string(from: lhs) + " - " + formatter.string(from: rhs)
+                if let direction = direction, !direction.isEmpty {
+                    text += " (\(direction))"
+                }
+
+                return text
             }
         }
     }
