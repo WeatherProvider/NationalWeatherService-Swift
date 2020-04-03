@@ -13,7 +13,7 @@ extension Forecast {
         case none = "N/A"
     }
 
-    public enum Wind: CustomStringConvertible {
+    public enum Wind: CustomStringConvertible, Equatable {
         case single(Measurement<UnitSpeed>, direction: WindDirection)
         case range(lhs: Measurement<UnitSpeed>, rhs: Measurement<UnitSpeed>, direction: WindDirection)
 
