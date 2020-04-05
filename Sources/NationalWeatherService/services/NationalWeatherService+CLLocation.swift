@@ -20,7 +20,27 @@ extension NationalWeatherService {
         self.load(at: url, as: Point.self, then: handler)
     }
 
-//    public func forecast(for location: CLLocation, then handler: @escaping ForecastHandler) -> ForecastHandler {
-//        
-//    }
+    public func forecast(for location: CLLocation, then handler: @escaping ForecastHandler) {
+        self.loadPoint(for: location, then: { pointResult in
+            // TODO: this is ugly
+            switch pointResult {
+            case .success(let point):
+                self.loadForecast(at: point.forecast, then: handler)
+            case .failure(let error):
+                handler(.failure(error))
+            }
+        })
+    }
+
+    public func hourlyForecast(for location: CLLocation, then handler: @escaping ForecastHandler) {
+        self.loadPoint(for: location, then: { pointResult in
+            // TODO: this is ugly
+            switch pointResult {
+            case .success(let point):
+                self.loadForecast(at: point.forecastHourly, then: handler)
+            case .failure(let error):
+                handler(.failure(error))
+            }
+        })
+    }
 }
