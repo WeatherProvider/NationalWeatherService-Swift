@@ -12,6 +12,7 @@ public struct NationalWeatherService {
     // Definitions
     public typealias GeoJSONHandler = (Result<[MKGeoJSONObject], Error>) -> Void
     public typealias ForecastHandler = (Result<Forecast, Error>) -> Void
+    public typealias PointHandler = (Result<Point, Error>) -> Void
 
     private let geoJSONDecoder = MKGeoJSONDecoder()
     private let decoder: JSONDecoder = {
@@ -20,6 +21,8 @@ public struct NationalWeatherService {
 
         return _decoder
     }()
+
+    public static let BaseURL: URL = URL(string: "https://api.weather.gov/")!
 
     let session: URLSession = URLSession(configuration: .ephemeral)
 
@@ -33,22 +36,23 @@ public struct NationalWeatherService {
     }
 
     public func loadNWS(at url: URL, then handler: @escaping GeoJSONHandler) {
-        var components = URLComponents(url: url, resolvingAgainstBaseURL: false)!
-        components.queryItems = [
-            URLQueryItem(name: "units", value: "us")
-        ]
-
-        var request = URLRequest(url: components.url!)
+        var request = URLRequest(url: url)
         request.addValue(userAgent, forHTTPHeaderField: "User-Agent")
         request.addValue("application/geo+json", forHTTPHeaderField: "Accept")
 
         let task = session.dataTask(with: request) { result in
             switch result {
             case .success(let data):
-                do {
-                    handler(.success(try self.geoJSONDecoder.decode(data)))
-                } catch {
-                    handler(.failure(error))
+                if let geoJSON = try? self.geoJSONDecoder.decode(data) {
+                    handler(.success(geoJSON))
+                } else if let errorDetails = try? self.decoder.decode(APIErrorDetails.self, from: data) {
+                    if errorDetails.isInvalidPoint {
+                        handler(.failure(APIError.invalidPoint(errorDetails)))
+                    } else {
+                        handler(.failure(APIError.other(errorDetails)))
+                    }
+                } else {
+                    handler(.failure(APIError.unknownError))
                 }
             case .failure(let error):
                 handler(.failure(error))
@@ -58,7 +62,9 @@ public struct NationalWeatherService {
         task.resume()
     }
 
-    public func loadForecast(at url: URL, then handler: @escaping ForecastHandler) {
+    public func load<T: Decodable>(at url: URL,
+                                   as type: T.Type,
+                                   then handler: @escaping (Result<T, Error>) -> Void) {
         self.loadNWS(at: url) { result in
             switch result {
             case .success(let objects):
@@ -66,7 +72,7 @@ public struct NationalWeatherService {
                 let properties = feature.properties!
 
                 do {
-                    handler(.success(try self.decoder.decode(Forecast.self, from: properties)))
+                    handler(.success(try self.decoder.decode(type, from: properties)))
                 } catch {
                     handler(.failure(error))
                 }
@@ -74,5 +80,18 @@ public struct NationalWeatherService {
                 handler(.failure(error))
             }
         }
+    }
+
+    public func loadForecast(at url: URL, then handler: @escaping ForecastHandler) {
+        var components = URLComponents(url: url, resolvingAgainstBaseURL: false)!
+        components.queryItems = [
+            URLQueryItem(name: "units", value: "us")
+        ]
+
+        self.load(at: components.url!, as: Forecast.self, then: handler)
+    }
+
+    public func loadPoint(at url: URL, then handler: @escaping PointHandler) {
+        self.load(at: url, as: Point.self, then: handler)
     }
 }
