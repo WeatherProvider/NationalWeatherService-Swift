@@ -1,9 +1,3 @@
-//
-//  ForecastFixtures.swift
-//  
-//
-//  Created by Alan Chu on 4/2/20.
-//
 import Foundation
 
 extension Fixtures {

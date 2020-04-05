@@ -22,6 +22,8 @@ public struct NationalWeatherService {
         return _decoder
     }()
 
+    public static let BaseURL: URL = URL(string: "https://api.weather.gov/")!
+
     let session: URLSession = URLSession(configuration: .ephemeral)
 
     let userAgent: String

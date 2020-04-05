@@ -1,10 +1,3 @@
-//
-//  File.swift
-//  
-//
-//  Created by Alan Chu on 4/5/20.
-//
-
 import Foundation
 
 extension Fixtures {

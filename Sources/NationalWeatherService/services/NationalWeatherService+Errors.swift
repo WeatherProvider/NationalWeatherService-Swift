@@ -1,6 +1,6 @@
 //
-//  File.swift
-//  
+//  NationalWeatherService+Errors.swift
+//  NationalWeatherService
 //
 //  Created by Alan Chu on 4/5/20.
 //
