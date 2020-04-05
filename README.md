@@ -1,6 +1,33 @@
 # National Weather Service
-
 A Swift wrapper for the National Weather Service's weather.gov free-to-use public API.
+
+## Installation
+Swift Package Manager: `https://github.com/ualch9/NationalWeatherService-Swift.git`
+
+## Usage
+```swift
+import NationalWeatherService
+import CoreLocation
+
+let nws = NationalWeatherService(userAgent: "(MyWeatherApp, mycontact@example.com)")
+let location = CLLocation(latitude: 47.6174, longitude: -122.2017)
+
+nws.forecast(for: location) { result in
+  switch result {
+    case .success(let forecast):  print(forecast)
+    case .failure(let error):     print(error)
+  }
+}
+
+nws.hourlyForecast(for: location) { result in
+  switch result {
+    case .success(let forecast):  print(forecast)
+    case .failure(let error):     print(error)
+  }
+}
+```
+
+TODO: this
 
 ## License
 The weather data provided by this library is sourced from weather.gov, which is a work of the 
