@@ -85,7 +85,7 @@ public struct NationalWeatherService {
     public func loadForecast(at url: URL, then handler: @escaping ForecastHandler) {
         var components = URLComponents(url: url, resolvingAgainstBaseURL: false)!
         components.queryItems = [
-            URLQueryItem(name: "units", value: "us")
+            URLQueryItem(name: "units", value: "si")
         ]
 
         self.load(at: components.url!, as: Forecast.self, then: handler)
