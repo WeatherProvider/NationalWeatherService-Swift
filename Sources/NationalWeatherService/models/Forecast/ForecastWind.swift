@@ -31,7 +31,7 @@ extension Forecast {
         /// then the speed unit will be miles per hour. Otherwise, it will use kilometers per hour.
         /// - parameter direction: Text representing wind direction to parse into `WindDirection`.
         public init(from windText: String, direction: String) throws {
-            let unit: UnitSpeed = windText.hasSuffix("mph") ? .milesPerHour : .kilometersPerHour
+            let unit: UnitSpeed = windText.lowercased().hasSuffix("mph") ? .milesPerHour : .kilometersPerHour
             let split = windText.split(separator: " ")
 
             let windDirection = WindDirection(rawValue: direction.lowercased()) ?? .none
