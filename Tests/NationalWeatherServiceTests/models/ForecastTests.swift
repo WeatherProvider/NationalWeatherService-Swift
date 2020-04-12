@@ -54,6 +54,10 @@ final class ForecastTests: XCTestCase {
 
         XCTAssertEqual(forecast.generatedAt, iso8601.date(from: "2020-04-03T03:43:53+00:00")!)
         XCTAssertEqual(forecast.updated, iso8601.date(from: "2020-04-02T23:05:37+00:00")!)
+
+        XCTAssertEqual(forecast.validTimes.start, iso8601.date(from: "2020-04-02T17:00:00+00:00")!)
+        XCTAssertEqual(forecast.validTimes.end, iso8601.date(from: "2020-04-10T13:00:00+00:00")!)
+        
         XCTAssertEqual(forecast.elevation.converted(to: .meters).value, 56.997, accuracy: 0.001)
 
         XCTAssertEqual(forecast.periods.count, 14)

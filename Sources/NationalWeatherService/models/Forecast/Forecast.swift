@@ -16,7 +16,7 @@ public struct Forecast: Decodable {
     public let generatedAt: Date
 
     // TODO: Handle valid times interval
-//    public let validTimes: DateInterval
+    public let validTimes: DateInterval
     public let elevation: Measurement<UnitLength>
     public let periods: [Period]
 
@@ -25,6 +25,12 @@ public struct Forecast: Decodable {
 
         self.updated = try container.decode(Date.self, forKey: .updated)
         self.generatedAt = try container.decode(Date.self, forKey: .generatedAt)
+
+        let validTimesValue = try container.decode(String.self, forKey: .validTimes)
+        guard let validTimes = DateInterval.iso8601Interval(from: validTimesValue) else {
+            throw DecodingError.dataCorruptedError(forKey: .validTimes, in: container, debugDescription: "Invalid date interval.")
+        }
+        self.validTimes = validTimes
 
         let elevationContainer = try container.nestedContainer(keyedBy: AnyCodingKey.self, forKey: .elevation)
         let elevationValue = try elevationContainer.decode(Double.self, forKey: AnyCodingKey(stringValue: "value"))
