@@ -7,7 +7,7 @@ let package = Package(
     name: "NationalWeatherService",
     platforms: [
         .iOS(.v13),     // TODO: Support for older iOS. Namely, MKGeoJSON is iOS 13+.
-        .macOS(.v10_12)
+        .macOS(.v10_15)
     ],
     products: [
         // Products define the executables and libraries produced by a package, and make them visible to other packages.
