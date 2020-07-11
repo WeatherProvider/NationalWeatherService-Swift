@@ -3,19 +3,17 @@ import CoreLocation
 @testable import NationalWeatherService
 
 final class PointTests: XCTestCase {
-    let nws = NationalWeatherService(userAgent: "NationalWeatherService-SwiftPackage-UnitTests")
-    
-    func testSeattlePointFromURL() throws {
-        let url = URL(string: "https://api.weather.gov/points/47.6174,-122.2017")!
-
-        let loadPointExpectation = self.expectation(description: "Load Point")
-        nws.loadPoint(at: url) { result in
-            XCTAssertSuccess(result)
-            loadPointExpectation.fulfill()
-        }
-
-        waitForExpectations(timeout: 1000)
-    }
+//    func testSeattlePointFromURL() throws {
+//        let url = URL(string: "https://api.weather.gov/points/47.6174,-122.2017")!
+//
+//        let loadPointExpectation = self.expectation(description: "Load Point")
+//        nws.loadPoint(at: url) { result in
+//            XCTAssertSuccess(result)
+//            loadPointExpectation.fulfill()
+//        }
+//
+//        waitForExpectations(timeout: 1000)
+//    }
 
     func testSeattlePoint() throws {
         let coordinates = CLLocationCoordinate2D(latitude: 47.6174, longitude: -122.2017)
@@ -45,10 +43,4 @@ final class PointTests: XCTestCase {
         XCTAssertEqual(point.timeZone, "America/Los_Angeles")
         XCTAssertEqual(point.radarStation, "KATX")
     }
-
-    static var allTests = [
-        ("testSeattlePoint", testSeattlePoint),
-        ("testSeattlePointFromURL", testSeattlePointFromURL),
-        ("testPoint", testPoint)
-    ]
 }

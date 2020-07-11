@@ -2,32 +2,31 @@ import XCTest
 @testable import NationalWeatherService
 
 final class ForecastTests: XCTestCase {
-    let nws = NationalWeatherService(userAgent: "NationalWeatherService-SwiftPackage-UnitTests")
     let iso8601 = ISO8601DateFormatter()
 
-    func testForecastHourlyFromURL() throws {
-        let url = URL(string: "https://api.weather.gov/gridpoints/SEW/128,67/forecast/hourly")!
-
-        let loadForecastExpectation = self.expectation(description: "Load Forecast")
-        nws.loadForecast(at: url) { result in
-            XCTAssertSuccess(result)
-            loadForecastExpectation.fulfill()
-        }
-
-        waitForExpectations(timeout: 100, handler: nil)
-    }
-
-    func testForecastFromURL() throws {
-        let url = URL(string: "https://api.weather.gov/gridpoints/TOP/31,80/forecast")!
-
-        let loadForecastExpectation = self.expectation(description: "Load Forecast")
-        nws.loadForecast(at: url) { result in
-            XCTAssertSuccess(result)
-            loadForecastExpectation.fulfill()
-        }
-
-        waitForExpectations(timeout: 100, handler: nil)
-    }
+//    func testForecastHourlyFromURL() throws {
+//        let url = URL(string: "https://api.weather.gov/gridpoints/SEW/128,67/forecast/hourly")!
+//
+//        let loadForecastExpectation = self.expectation(description: "Load Forecast")
+//        nws.loadForecast(at: url) { result in
+//            XCTAssertSuccess(result)
+//            loadForecastExpectation.fulfill()
+//        }
+//
+//        waitForExpectations(timeout: 100, handler: nil)
+//    }
+//
+//    func testForecastFromURL() throws {
+//        let url = URL(string: "https://api.weather.gov/gridpoints/TOP/31,80/forecast")!
+//
+//        let loadForecastExpectation = self.expectation(description: "Load Forecast")
+//        nws.loadForecast(at: url) { result in
+//            XCTAssertSuccess(result)
+//            loadForecastExpectation.fulfill()
+//        }
+//
+//        waitForExpectations(timeout: 100, handler: nil)
+//    }
 
     func testForecast() throws {
         let decoder = JSONDecoder()
@@ -60,10 +59,4 @@ final class ForecastTests: XCTestCase {
         XCTAssertEqual(period.shortForecast, "Chance Rain Showers")
         XCTAssertEqual(period.detailedForecast, "A chance of rain showers. Mostly cloudy. Low around 37, with temperatures rising to around 39 overnight. Southeast wind 1 to 6 mph. Chance of precipitation is 50%. New rainfall amounts less than a tenth of an inch possible.")
     }
-
-    static var allTests = [
-        ("testForecastHourlyFromURL", testForecastHourlyFromURL),
-        ("testForecastFromURL", testForecastFromURL),
-        ("testForecast", testForecast)
-    ]
 }

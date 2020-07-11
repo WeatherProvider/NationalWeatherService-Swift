@@ -3,8 +3,6 @@ import CoreLocation
 @testable import NationalWeatherService
 
 final class GetForecastIntegrationTests: XCTestCase {
-    let nws = NationalWeatherService(userAgent: "NationalWeatherService-SwiftPackage-UnitTests")
-
     func testGetForecastForLocation() throws {
         let location = CLLocation(latitude: 47.6174, longitude: -122.2017)
         let forecastExpectation = self.expectation(description: "get forecast expectation")

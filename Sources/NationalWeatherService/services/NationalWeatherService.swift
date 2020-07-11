@@ -11,8 +11,6 @@ import MapKit
 public struct NationalWeatherService {
     // Definitions
     public typealias GeoJSONHandler = (Result<[MKGeoJSONObject], Error>) -> Void
-    public typealias ForecastHandler = (Result<Forecast, Error>) -> Void
-    public typealias PointHandler = (Result<Point, Error>) -> Void
 
     private let geoJSONDecoder = MKGeoJSONDecoder()
     private let decoder: JSONDecoder = {
@@ -80,18 +78,5 @@ public struct NationalWeatherService {
                 handler(.failure(error))
             }
         }
-    }
-
-    public func loadForecast(at url: URL, then handler: @escaping ForecastHandler) {
-        var components = URLComponents(url: url, resolvingAgainstBaseURL: false)!
-        components.queryItems = [
-            URLQueryItem(name: "units", value: "si")
-        ]
-
-        self.load(at: components.url!, as: Forecast.self, then: handler)
-    }
-
-    public func loadPoint(at url: URL, then handler: @escaping PointHandler) {
-        self.load(at: url, as: Point.self, then: handler)
     }
 }
