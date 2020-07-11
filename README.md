@@ -2,7 +2,10 @@
 A Swift wrapper for the National Weather Service's weather.gov free-to-use public API.
 
 ## Installation
-Swift Package Manager: `https://github.com/ualch9/NationalWeatherService-Swift.git`
+Swift Package Manager: 
+```
+https://github.com/ualch9/NationalWeatherService-Swift.git
+```
 
 ## Usage
 ```swift
@@ -12,6 +15,7 @@ import CoreLocation
 let nws = NationalWeatherService(userAgent: "(MyWeatherApp, mycontact@example.com)")
 let location = CLLocation(latitude: 47.6174, longitude: -122.2017)
 
+// Gets the forecast, organized into time periods (such as Afternoon, Evening, etc).
 nws.forecast(for: location) { result in
   switch result {
     case .success(let forecast):  print(forecast)
@@ -19,15 +23,28 @@ nws.forecast(for: location) { result in
   }
 }
 
+// Gets the forecast, organized into hours.
 nws.hourlyForecast(for: location) { result in
   switch result {
     case .success(let forecast):  print(forecast)
     case .failure(let error):     print(error)
   }
 }
+
+// Gets the current condition.
+nws.currentCondition(for: location) { result in
+  switch result {
+    case .success(let period):    print(period)
+    case .failure(let error):     print(error)
+  }
+}
 ```
 
 TODO: this
+
+### Unit Tests
+To do unit tests, you must specify an Environment Variable named `NWS_AGENT_CONTACT` with
+the value of your email or some other contact information.
 
 ## License
 The weather data provided by this library is sourced from weather.gov, which is a work of the 
