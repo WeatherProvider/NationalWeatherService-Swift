@@ -1,24 +1,26 @@
 import XCTest
 
-fileprivate func resultIsSuccess<Success, Failure>(_ result: Result<Success, Failure>) -> Bool {
-    switch result {
-    case .success: return true
-    case .failure: return false
-    }
-}
-
 public func XCTAssertSuccess<Success, Failure>(_ result: Result<Success, Failure>, message: String? = nil) {
-    if let message = message {
-        XCTAssertTrue(resultIsSuccess(result), message)
-    } else {
-        XCTAssertTrue(resultIsSuccess(result))
+    switch result {
+    case .success: break
+    case .failure(let error):
+        if let message = message {
+            XCTFail("XCTAssertSuccess failed, \(message). Failure Error: \(error as NSError)")
+        } else {
+            XCTFail("XCTAssertSuccess failed: \(error as NSError)")
+        }
     }
 }
 
 public func XCTAssertFailure<Success, Failure>(_ result: Result<Success, Failure>, message: String? = nil) {
-    if let message = message {
-        XCTAssertFalse(resultIsSuccess(result), message)
-    } else {
-        XCTAssertFalse(resultIsSuccess(result))
+    switch result {
+    case .failure: break
+    case .success:
+        if let message = message {
+            XCTFail("XCTAssertFailure failed, \(message)")
+        } else {
+            XCTFail("XCTAssertFailure failed")
+        }
     }
+
 }

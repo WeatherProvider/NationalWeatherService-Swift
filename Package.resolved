@@ -1,0 +1,25 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "geos",
+        "repositoryURL": "https://github.com/GEOSwift/geos.git",
+        "state": {
+          "branch": null,
+          "revision": "083e366bc831d0f951974151315383830a79d447",
+          "version": "5.0.0"
+        }
+      },
+      {
+        "package": "GEOSwift",
+        "repositoryURL": "https://github.com/GEOSwift/GEOSwift.git",
+        "state": {
+          "branch": null,
+          "revision": "7e27a3b92b2ea61cf63ef1664bbe5c734cbb7447",
+          "version": "7.1.0"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

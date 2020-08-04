@@ -5,14 +5,13 @@
 //  Created by Alan Chu on 4/2/20.
 //
 
-
-import MapKit
+import Foundation
+import GEOSwift
 
 public struct NationalWeatherService {
     // Definitions
-    public typealias GeoJSONHandler = (Result<[MKGeoJSONObject], Error>) -> Void
+    public typealias GeoJSONHandler = (Result<GeoJSON, Error>) -> Void
 
-    private let geoJSONDecoder = MKGeoJSONDecoder()
     private let decoder: JSONDecoder = {
         let _decoder = JSONDecoder()
         _decoder.dateDecodingStrategy = .iso8601
@@ -41,7 +40,7 @@ public struct NationalWeatherService {
         let task = session.dataTask(with: request) { result in
             switch result {
             case .success(let data):
-                if let geoJSON = try? self.geoJSONDecoder.decode(data) {
+                if let geoJSON = try? decoder.decode(GeoJSON.self, from: data) {
                     handler(.success(geoJSON))
                 } else if let errorDetails = try? self.decoder.decode(APIErrorDetails.self, from: data) {
                     if errorDetails.isInvalidPoint {
@@ -65,14 +64,17 @@ public struct NationalWeatherService {
                                    then handler: @escaping (Result<T, Error>) -> Void) {
         self.loadNWS(at: url) { result in
             switch result {
-            case .success(let objects):
-                let feature = objects.compactMap { $0 as? MKGeoJSONFeature }.first!
-                let properties = feature.properties!
-
-                do {
-                    handler(.success(try self.decoder.decode(type, from: properties)))
-                } catch {
-                    handler(.failure(error))
+            case .success(let object):
+                if case let .feature(feature) = object,
+                   let featureProperties = feature.untypedProperties {
+                    do {
+                        let data = try JSONSerialization.data(withJSONObject: featureProperties, options: [])
+                        handler(.success(try decoder.decode(type, from: data)))
+                    } catch {
+                        handler(.failure(error))
+                    }
+                } else {
+                    handler(.failure(APIError.unknownError))
                 }
             case .failure(let error):
                 handler(.failure(error))
