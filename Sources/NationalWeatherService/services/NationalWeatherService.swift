@@ -40,7 +40,7 @@ public struct NationalWeatherService {
         let task = session.dataTask(with: request) { result in
             switch result {
             case .success(let data):
-                if let geoJSON = try? decoder.decode(GeoJSON.self, from: data) {
+                if let geoJSON = try? self.decoder.decode(GeoJSON.self, from: data) {
                     handler(.success(geoJSON))
                 } else if let errorDetails = try? self.decoder.decode(APIErrorDetails.self, from: data) {
                     if errorDetails.isInvalidPoint {
@@ -69,7 +69,7 @@ public struct NationalWeatherService {
                    let featureProperties = feature.untypedProperties {
                     do {
                         let data = try JSONSerialization.data(withJSONObject: featureProperties, options: [])
-                        handler(.success(try decoder.decode(type, from: data)))
+                        handler(.success(try self.decoder.decode(type, from: data)))
                     } catch {
                         handler(.failure(error))
                     }
