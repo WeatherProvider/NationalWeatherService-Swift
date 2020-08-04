@@ -5,25 +5,30 @@
 //  Created by Alan Chu on 7/11/20.
 //
 
-import CoreLocation
+import Foundation
 
 extension NationalWeatherService {
     public typealias PointHandler = (Result<Point, Error>) -> Void
 
-    public func loadPoint(for coordinate: CLLocationCoordinate2D, then handler: @escaping PointHandler) {
+    public func loadPoint(latitude: Double, longitude: Double, then handler: @escaping PointHandler) {
         let url = NationalWeatherService.BaseURL
             .appendingPathComponent("points")
-            .appendingPathComponent("\(coordinate.latitude),\(coordinate.longitude)")
+            .appendingPathComponent("\(latitude),\(longitude)")
 
         self.load(at: url, as: Point.self, then: handler)
     }
+}
 
-    // MARK: - Sugar
-    fileprivate func loadPoint(at url: URL, then handler: @escaping PointHandler) {
-        self.load(at: url, as: Point.self, then: handler)
+#if canImport(CoreLocation)
+import CoreLocation
+
+extension NationalWeatherService {
+    public func loadPoint(for coordinate: CLLocationCoordinate2D, then handler: @escaping PointHandler) {
+        self.loadPoint(latitude: coordinate.latitude, longitude: coordinate.longitude, then: handler)
     }
 
     public func loadPoint(for location: CLLocation, then handler: @escaping PointHandler) {
-        return self.loadPoint(for: location.coordinate, then: handler)
+        self.loadPoint(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude, then: handler)
     }
 }
+#endif

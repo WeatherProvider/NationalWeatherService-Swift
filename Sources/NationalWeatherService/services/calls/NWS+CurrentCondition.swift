@@ -5,14 +5,12 @@
 //  Created by Alan Chu on 7/11/20.
 //
 
-import CoreLocation
-
 extension NationalWeatherService {
     public typealias CurrentConditionHandler = (Result<Forecast.Period, Error>) -> Void
 
     /// Gets the current weather for the given location.
-    public func currentCondition(for coordinates: CLLocationCoordinate2D, then handler: @escaping CurrentConditionHandler) {
-        self.forecast(for: coordinates) { result in
+    public func currentCondition(latitude: Double, longitude: Double, then handler: @escaping CurrentConditionHandler) {
+        self.forecast(latitude: latitude, longitude: longitude) { result in
             switch result {
             case .success(let forecast):
                 let now = Date()
@@ -31,10 +29,20 @@ extension NationalWeatherService {
             }
         }
     }
+}
 
-    // MARK: - Sugar
+#if canImport(CoreLocation)
+import CoreLocation
+
+extension NationalWeatherService {
+    /// Gets the current weather for the given location.
+    public func currentCondition(for coordinates: CLLocationCoordinate2D, then handler: @escaping CurrentConditionHandler) {
+        self.currentCondition(latitude: coordinates.latitude, longitude: coordinates.latitude, then: handler)
+    }
+
+    /// Gets the current weather for the given location.
     public func currentCondition(for location: CLLocation, then handler: @escaping CurrentConditionHandler) {
         self.currentCondition(for: location.coordinate, then: handler)
     }
-
 }
+#endif

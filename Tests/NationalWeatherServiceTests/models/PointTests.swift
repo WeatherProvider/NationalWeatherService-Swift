@@ -1,5 +1,4 @@
 import XCTest
-import CoreLocation
 @testable import NationalWeatherService
 
 final class PointTests: XCTestCase {
@@ -16,10 +15,8 @@ final class PointTests: XCTestCase {
 //    }
 
     func testSeattlePoint() throws {
-        let coordinates = CLLocationCoordinate2D(latitude: 47.6174, longitude: -122.2017)
-
         let loadPointExpectation = self.expectation(description: "Load Point")
-        nws.loadPoint(for: coordinates) { result in
+        nws.loadPoint(latitude: 47.6174, longitude: -122.2017) { result in
             XCTAssertSuccess(result)
             loadPointExpectation.fulfill()
         }
