@@ -5,6 +5,8 @@
 //  Created by Alan Chu on 7/11/20.
 //
 
+import Foundation
+
 extension NationalWeatherService {
     public typealias CurrentConditionHandler = (Result<Forecast.Period, Error>) -> Void
 

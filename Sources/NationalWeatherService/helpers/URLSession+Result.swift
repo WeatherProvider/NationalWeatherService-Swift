@@ -6,6 +6,9 @@
 //
 
 import Foundation
+#if canImport(FoundationNetworking)
+import FoundationNetworking
+#endif
 
 extension URLSession {
     public func dataTask(with request: URLRequest, handler: @escaping (Result<Data, Error>) -> Void) -> URLSessionDataTask {
