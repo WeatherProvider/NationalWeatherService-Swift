@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import MapKit
 
 public struct Point: Decodable {
     public enum CodingKeys: String, CodingKey {

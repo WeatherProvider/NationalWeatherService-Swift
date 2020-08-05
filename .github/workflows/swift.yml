@@ -1,5 +1,6 @@
 name: Swift
-
+env:
+    NWS_AGENT_CONTACT: ${{ secrets.NWS_AGENT_CONTACT }}
 on:
   push:
     branches: [ master ]
