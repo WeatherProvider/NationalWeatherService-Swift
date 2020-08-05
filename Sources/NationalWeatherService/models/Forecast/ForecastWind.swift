@@ -62,36 +62,10 @@ extension Forecast {
             }
         }
 
-        // MARK: - Description implementation
-
         public var description: String {
-            if #available(iOS 10, *) {
-                return appleDescription
-            }
-
-            if #available(macOS 10.12, *) {
-                return appleDescription
-            }
-
-            return otherDescription
-        }
-
-        @available(iOS 10, *)
-        @available(macOS 10.12, *)
-        fileprivate var appleDescription: String {
-            let formatter = MeasurementFormatter()
-            switch self {
-            case .single(let speed, let direction):
-                return formatter.string(from: speed) + " (\(direction))".uppercased()
-            case .range(let lhs, let rhs, let direction):
-                return formatter.string(from: lhs) + " - " + formatter.string(from: rhs) + " (\(direction))".uppercased()
-            }
-        }
-
-        fileprivate var otherDescription: String {
             func formatSpeed(_ measurement: Measurement<UnitSpeed>) -> String {
-                let km = measurement.converted(to: .kilometersPerHour)
-                return "\(km.value) km"
+                let mph = measurement.converted(to: .kilometersPerHour)
+                return "\(mph.value) mph"
             }
 
             switch self {
