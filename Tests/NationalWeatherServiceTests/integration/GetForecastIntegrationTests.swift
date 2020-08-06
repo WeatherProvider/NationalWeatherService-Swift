@@ -1,12 +1,10 @@
 import XCTest
-import CoreLocation
 @testable import NationalWeatherService
 
 final class GetForecastIntegrationTests: XCTestCase {
     func testGetForecastForLocation() throws {
-        let location = CLLocation(latitude: 47.6174, longitude: -122.2017)
         let forecastExpectation = self.expectation(description: "get forecast expectation")
-        nws.forecast(for: location) { result in
+        nws.forecast(latitude: 47.6174, longitude: -122.2017) { result in
             XCTAssertSuccess(result)
 
             let forecast = try! result.get()
@@ -15,8 +13,12 @@ final class GetForecastIntegrationTests: XCTestCase {
             forecastExpectation.fulfill()
         }
 
+        wait(for: [forecastExpectation], timeout: 5)
+    }
+
+    func testGetHourlyForecast() throws {
         let hourlyForecastExpectation = self.expectation(description: "get hourly forecast expectation")
-        nws.hourlyForecast(for: location) { result in
+        nws.hourlyForecast(latitude: 47.6174, longitude: -122.2017) { result in
             XCTAssertSuccess(result)
 
             let forecast = try! result.get()
@@ -24,11 +26,11 @@ final class GetForecastIntegrationTests: XCTestCase {
 
             hourlyForecastExpectation.fulfill()
         }
-
-        wait(for: [forecastExpectation, hourlyForecastExpectation], timeout: 10)
+        wait(for: [hourlyForecastExpectation], timeout: 10)
     }
 
     static var allTests = [
-        ("testGetForecastForLocation", testGetForecastForLocation)
+        ("testGetForecastForLocation", testGetForecastForLocation),
+        ("testGetHourlyForecast", testGetHourlyForecast)
     ]
 }

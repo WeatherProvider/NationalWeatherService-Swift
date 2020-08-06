@@ -59,4 +59,8 @@ final class ForecastTests: XCTestCase {
         XCTAssertEqual(period.shortForecast, "Chance Rain Showers")
         XCTAssertEqual(period.detailedForecast, "A chance of rain showers. Mostly cloudy. Low around 37, with temperatures rising to around 39 overnight. Southeast wind 1 to 6 mph. Chance of precipitation is 50%. New rainfall amounts less than a tenth of an inch possible.")
     }
+
+    static var allTests = [
+        ("testForecastTests", testForecast)
+    ]
 }
