@@ -1,6 +1,7 @@
 import XCTest
 @testable import NationalWeatherService
 
+#if os(iOS) || os(macOS)
 final class ForecastWindTests: XCTestCase {
     func testWindSpeedRange() throws {
         // MARK: Text representation
@@ -34,3 +35,4 @@ final class ForecastWindTests: XCTestCase {
         ("testWindSpeedRange", testWindSpeedRange)
     ]
 }
+#endif
