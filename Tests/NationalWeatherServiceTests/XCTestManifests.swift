@@ -7,7 +7,8 @@ public func allTests() -> [XCTestCaseEntry] {
         testCase(ForecastWindTests.allTests),
         testCase(PointTests.allTests),
         testCase(GetForecastIntegrationTests.allTests),
-        testCase(NationalWeatherServiceTests.allTests)
+        testCase(NationalWeatherServiceTests.allTests),
+        testCase(ISO8601DurationTests.allTests)
     ]
 }
 #endif

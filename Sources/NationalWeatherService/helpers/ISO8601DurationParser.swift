@@ -69,10 +69,20 @@ private extension String {
             if !scanner.scanInt(&value) {
                 return nil
             }
+
+            // Linux Foundation uses String.
+            #if os(Linux)
+            var identifier: String?
+            if !scanner.scanCharacters(from: identifiersSet, into: &identifier) || identifier?.count != 1 {
+                return nil
+            }
+            #else
+            // Apple platforms uses NSString.
             var identifier: NSString?
             if !scanner.scanCharacters(from: identifiersSet, into: &identifier) || identifier?.length != 1 {
                 return nil
             }
+            #endif
             // swiftlint:disable:next force_unwrapping
             let unit = mapping[Character(identifier! as String)]!
             components.append((unit, value))
