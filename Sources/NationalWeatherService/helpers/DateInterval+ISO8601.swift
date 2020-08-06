@@ -17,7 +17,9 @@ extension DateInterval {
         guard let durationValue = split.popLast() else { return nil }
         guard let startTime = iso8601Formatter.date(from: String(split.popLast() ?? "")) else { return nil }
 
-        let duration = DateComponents.durationFrom8601String(durationString: String(durationValue))
+        guard let duration = try? DateComponents(ISO8601String: String(durationValue)) else { return nil }
+
+//        let duration = DateComponents.durationFrom8601String(durationString: String(durationValue))
 
         guard let endTime = calendar.date(byAdding: duration, to: startTime) else { return nil }
 
