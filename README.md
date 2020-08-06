@@ -1,5 +1,11 @@
 # National Weather Service
+![Swift](https://github.com/ualch9/NationalWeatherService-Swift/workflows/Swift/badge.svg)
+
 A Swift wrapper for the National Weather Service's weather.gov free-to-use public API.
+
+## Platforms
+- Apple platforms
+- Ubuntu
 
 ## Installation
 Swift Package Manager: 
