@@ -40,4 +40,9 @@ final class PointTests: XCTestCase {
         XCTAssertEqual(point.timeZone, "America/Los_Angeles")
         XCTAssertEqual(point.radarStation, "KATX")
     }
+
+    static var allTests = [
+        ("testSeattlePoint", testSeattlePoint),
+        ("testPoint", testPoint)
+    ]
 }

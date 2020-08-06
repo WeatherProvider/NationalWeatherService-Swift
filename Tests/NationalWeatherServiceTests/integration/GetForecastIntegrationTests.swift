@@ -13,6 +13,10 @@ final class GetForecastIntegrationTests: XCTestCase {
             forecastExpectation.fulfill()
         }
 
+        wait(for: [forecastExpectation], timeout: 5)
+    }
+
+    func testGetHourlyForecast() throws {
         let hourlyForecastExpectation = self.expectation(description: "get hourly forecast expectation")
         nws.hourlyForecast(latitude: 47.6174, longitude: -122.2017) { result in
             XCTAssertSuccess(result)
@@ -22,11 +26,11 @@ final class GetForecastIntegrationTests: XCTestCase {
 
             hourlyForecastExpectation.fulfill()
         }
-
-        wait(for: [forecastExpectation, hourlyForecastExpectation], timeout: 10)
+        wait(for: [hourlyForecastExpectation], timeout: 10)
     }
 
     static var allTests = [
-        ("testGetForecastForLocation", testGetForecastForLocation)
+        ("testGetForecastForLocation", testGetForecastForLocation),
+        ("testGetHourlyForecast", testGetHourlyForecast)
     ]
 }

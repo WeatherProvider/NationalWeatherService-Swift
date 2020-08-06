@@ -13,7 +13,7 @@ extension Forecast {
         case none = "N/A"
     }
 
-    public enum Wind: CustomStringConvertible, Equatable {
+    public enum Wind: /*CustomStringConvertible,*/ Equatable {
         case single(Measurement<UnitSpeed>, direction: WindDirection)
         case range(lhs: Measurement<UnitSpeed>, rhs: Measurement<UnitSpeed>, direction: WindDirection)
 
@@ -62,19 +62,19 @@ extension Forecast {
             }
         }
 
-        public var description: String {
-            func formatSpeed(_ measurement: Measurement<UnitSpeed>) -> String {
-                let mph = measurement.converted(to: .kilometersPerHour)
-                return "\(mph.value) mph"
-            }
-
-            switch self {
-            case .single(let speed, let direction):
-                return formatSpeed(speed) + " (\(direction))".uppercased()
-            case .range(let lhs, let rhs, let direction):
-                let directionText = "(\(direction))".uppercased()
-                return "\(formatSpeed(lhs)) - \(formatSpeed(rhs)) \(directionText)"
-            }
-        }
+//        public var description: String {
+//            func formatSpeed(_ measurement: Measurement<UnitSpeed>) -> String {
+//                let mph = measurement.converted(to: .milesPerHour)
+//                return "\(mph.value) mph"
+//            }
+//
+//            switch self {
+//            case .single(let speed, let direction):
+//                return formatSpeed(speed) + " (\(direction))".uppercased()
+//            case .range(let lhs, let rhs, let direction):
+//                let directionText = "(\(direction))".uppercased()
+//                return "\(formatSpeed(lhs)) - \(formatSpeed(rhs)) \(directionText)"
+//            }
+//        }
     }
 }

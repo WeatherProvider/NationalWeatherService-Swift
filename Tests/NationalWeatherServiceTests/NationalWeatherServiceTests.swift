@@ -14,4 +14,8 @@ final class NationalWeatherServiceTests: XCTestCase {
 
         self.wait(for: [expectation], timeout: 60)
     }
+
+    static var allTests = [
+        ("testCurrentConditions", testCurrentConditions)
+    ]
 }
