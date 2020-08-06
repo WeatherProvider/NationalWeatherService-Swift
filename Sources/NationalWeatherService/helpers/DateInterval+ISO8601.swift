@@ -13,15 +13,11 @@ extension DateInterval {
                                 in calendar: Calendar = .current) -> DateInterval? {
         var split = iso8601Duration.split(separator: "/")
 
-        guard split.count == 2 else { return nil }
-        guard let durationValue = split.popLast() else { return nil }
-        guard let startTime = iso8601Formatter.date(from: String(split.popLast() ?? "")) else { return nil }
-
-        guard let duration = try? DateComponents(ISO8601String: String(durationValue)) else { return nil }
-
-//        let duration = DateComponents.durationFrom8601String(durationString: String(durationValue))
-
-        guard let endTime = calendar.date(byAdding: duration, to: startTime) else { return nil }
+        guard split.count == 2,
+              let durationValue = split.popLast(),
+              let startTime = iso8601Formatter.date(from: String(split.popLast() ?? "")),
+              let duration = try? DateComponents(ISO8601String: String(durationValue)),
+              let endTime = calendar.date(byAdding: duration, to: startTime) else { return nil }
 
         return DateInterval(start: startTime, end: endTime)
     }

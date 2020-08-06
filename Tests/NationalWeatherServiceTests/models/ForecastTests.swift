@@ -2,6 +2,8 @@ import XCTest
 @testable import NationalWeatherService
 
 final class ForecastTests: XCTestCase {
+    let iso8601 = ISO8601DateFormatter()
+
 //    func testForecastHourlyFromURL() throws {
 //        let url = URL(string: "https://api.weather.gov/gridpoints/SEW/128,67/forecast/hourly")!
 //
@@ -33,11 +35,11 @@ final class ForecastTests: XCTestCase {
         let forecastData = Fixtures.Forecast_Only_Fixture_SEAW
         let forecast = try decoder.decode(Forecast.self, from: forecastData)
 
-        XCTAssertEqual(forecast.generatedAt, Date(timeIntervalSinceReferenceDate: 607578233))
-        XCTAssertEqual(forecast.updated, Date(timeIntervalSinceReferenceDate: 607561537))
+        XCTAssertEqual(forecast.generatedAt, iso8601.date(from: "2020-04-03T03:43:53+00:00")!)
+        XCTAssertEqual(forecast.updated, iso8601.date(from: "2020-04-02T23:05:37+00:00")!)
 
-        XCTAssertEqual(forecast.validTimes, DateInterval(start: Date(timeIntervalSinceReferenceDate: 607539600),
-                                                         end: Date(timeIntervalSinceReferenceDate: 608216400)))
+        XCTAssertEqual(forecast.validTimes, DateInterval(start: iso8601.date(from: "2020-04-02T17:00:00+00:00")!,
+                                                         end: iso8601.date(from: "2020-04-10T13:00:00+00:00")!))
         
         XCTAssertEqual(forecast.elevation.converted(to: .meters).value, 56.997, accuracy: 0.001)
 
@@ -45,8 +47,8 @@ final class ForecastTests: XCTestCase {
 
         let period = forecast.periods.first!
         XCTAssertEqual(period.name, "Tonight")
-        XCTAssertEqual(period.date, DateInterval(start: Date(timeIntervalSinceReferenceDate: 607575600),
-                                                 end: Date(timeIntervalSinceReferenceDate: 607611600)))
+        XCTAssertEqual(period.date, DateInterval(start: iso8601.date(from: "2020-04-02T20:00:00-07:00")!,
+                                                 end: iso8601.date(from: "2020-04-03T06:00:00-07:00")!))
         XCTAssertFalse(period.isDaytime)
         XCTAssertEqual(period.temperature.converted(to: .fahrenheit).value, 37.0)
         XCTAssertEqual(period.windSpeed, Forecast.Wind.range(lhs: Measurement(value: 1, unit: UnitSpeed.milesPerHour),
