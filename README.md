@@ -10,7 +10,7 @@ A Swift wrapper for the National Weather Service's weather.gov free-to-use publi
 ## Installation
 Swift Package Manager: 
 ```
-https://github.com/ualch9/NationalWeatherService-Swift.git
+https://github.com/WeatherProvider/NationalWeatherService-Swift.git
 ```
 
 ## Usage
