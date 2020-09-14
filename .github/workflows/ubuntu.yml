@@ -1,4 +1,4 @@
-name: Swift
+name: macOS
 env:
     NWS_AGENT_CONTACT: ${{ secrets.NWS_AGENT_CONTACT }}
 on:
@@ -8,15 +8,6 @@ on:
     branches: [ master ]
 
 jobs:
-  macos:
-    runs-on: macos-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Build
-      run: swift build -v
-    - name: Run tests
-      run: swift test -v
-
   linux:
     runs-on: ubuntu-latest
     container:
