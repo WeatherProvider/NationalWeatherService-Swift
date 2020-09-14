@@ -1,4 +1,4 @@
-name: macOS
+name: Linux
 env:
     NWS_AGENT_CONTACT: ${{ secrets.NWS_AGENT_CONTACT }}
 on:
@@ -8,7 +8,7 @@ on:
     branches: [ master ]
 
 jobs:
-  linux:
+  ubuntu:
     runs-on: ubuntu-latest
     container:
       image: swift:5.2.4
