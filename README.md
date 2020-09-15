@@ -1,11 +1,14 @@
 # National Weather Service
-![Swift](https://github.com/ualch9/NationalWeatherService-Swift/workflows/Swift/badge.svg)
+![Swift 5.3](https://img.shields.io/badge/swift-5.3-orange)
+![MIT License](https://img.shields.io/badge/license-MIT-lightgrey)
 
 A Swift wrapper for the National Weather Service's weather.gov free-to-use public API.
 
 ## Platforms
-- Apple platforms
-- Ubuntu
+| Platform | CI |
+| :------- | :- |
+| Apple    | ![macOS](https://github.com/ualch9/NationalWeatherService-Swift/workflows/macOS/badge.svg) |
+| Linux (Ubuntu & Amazon) | ![Linux](https://github.com/ualch9/NationalWeatherService-Swift/workflows/Linux/badge.svg) |
 
 ## Installation
 Swift Package Manager: 

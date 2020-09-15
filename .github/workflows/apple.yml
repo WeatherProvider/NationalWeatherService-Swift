@@ -1,0 +1,33 @@
+name: Apple
+env:
+    NWS_AGENT_CONTACT: ${{ secrets.NWS_AGENT_CONTACT }}
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  macos:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build
+      run: swift build -v
+    - name: Run tests
+      run: swift test -v
+
+  ios:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build
+      run: xcodebuild clean build-for-testing
+        -scheme 'NationalWeatherService'
+        -destination 'name=iPhone 11 Pro'
+        -quiet
+    - name: Unit Test
+      run: xcodebuild test-without-building
+        -scheme 'NationalWeatherService'
+        -destination 'name=iPhone 11 Pro'
+        -quiet
