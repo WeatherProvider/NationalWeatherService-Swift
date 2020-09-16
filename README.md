@@ -16,6 +16,7 @@ Swift Package Manager:
 https://github.com/WeatherProvider/NationalWeatherService-Swift.git
 ```
 
+At this time, I recommend you use `exactVersion` or `commit`. This library is still under active development and is subject to major changes at any time. I try to minimize API changes between minor versions, but this is a just-in-case.
 ## Usage
 ```swift
 import NationalWeatherService
