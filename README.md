@@ -7,7 +7,7 @@ A Swift wrapper for the National Weather Service's weather.gov free-to-use publi
 ## Platforms
 | Platform | CI |
 | :------- | :- |
-| Apple    | ![macOS](https://github.com/ualch9/NationalWeatherService-Swift/workflows/macOS/badge.svg) |
+| Apple    | ![Apple](https://github.com/WeatherProvider/NationalWeatherService-Swift/workflows/Apple/badge.svg) |
 | Linux (Ubuntu & Amazon) | ![Linux](https://github.com/ualch9/NationalWeatherService-Swift/workflows/Linux/badge.svg) |
 
 ## Installation
