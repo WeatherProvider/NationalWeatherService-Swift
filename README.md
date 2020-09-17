@@ -10,6 +10,12 @@ A Swift wrapper for the National Weather Service's weather.gov free-to-use publi
 | Apple    | ![Apple](https://github.com/WeatherProvider/NationalWeatherService-Swift/workflows/Apple/badge.svg) |
 | Linux (Ubuntu & Amazon) | ![Linux](https://github.com/ualch9/NationalWeatherService-Swift/workflows/Linux/badge.svg) |
 
+### Contributing
+- For Apple-platforms, use Xcode 12. Make sure to test on iOS and macOS.
+- For Linux, either:
+  - Use [Codespaces](https://docs.github.com/en/github/developing-online-with-codespaces/about-codespaces), this repo is setup for Codespaces. If you have access to Codespaces, you can create one using <kbd>Code</kbd> → <kbd>Open with Codespaces</kbd>.
+  - Write your code in Xcode, then build and test in Docker. I'd recommend using [iainsmith/swift-docker](https://github.com/iainsmith/swift-docker) to automate this task.
+
 ## Installation
 Swift Package Manager: 
 ```
