@@ -1,0 +1,13 @@
+{
+    "configurations": [
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Run your Executable",
+            "program": "${workspaceFolder}/NationalWeatherService-Swift/.build/debug/NationalWeatherService",
+            "args": [],
+            "cwd": "${workspaceFolder}/NationalWeatherService-Swift",
+            "preLaunchTask": "swift-build"
+        }
+    ]
+}
