@@ -1,5 +1,5 @@
 # [Choice] Swift version: 5.2, 5.1, 4.2
-ARG VARIANT=5.2
+ARG VARIANT=5.3
 FROM swift:${VARIANT}
 
 # [Option] Install zsh
