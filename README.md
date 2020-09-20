@@ -1,3 +1,5 @@
+<img src="https://upload.wikimedia.org/wikipedia/en/a/a4/Flag_of_the_United_States.svg" alt="Flag of the United States" align="left" width="64">
+
 # National Weather Service
 ![Swift 5.3](https://img.shields.io/badge/swift-5.3-orange)
 ![MIT License](https://img.shields.io/badge/license-MIT-lightgrey)
