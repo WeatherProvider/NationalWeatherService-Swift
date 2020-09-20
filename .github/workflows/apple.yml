@@ -15,6 +15,12 @@ jobs:
       with:
         xcode-version: 12
     - uses: actions/checkout@v2
+    - uses: actions/cache@v2
+      with:
+        path: .build
+        key: ${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}
+        restore-keys: |
+          ${{ runner.os }}-spm-
     - name: Build
       run: swift build -v
     - name: Run tests
@@ -27,6 +33,12 @@ jobs:
       with:
         xcode-version: 12
     - uses: actions/checkout@v2
+    - uses: actions/cache@v2
+      with:
+        path: .build
+        key: ${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}
+        restore-keys: |
+          ${{ runner.os }}-spm-
     - name: Build
       run: xcodebuild clean build-for-testing
         -scheme 'NationalWeatherService'
