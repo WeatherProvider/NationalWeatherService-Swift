@@ -11,7 +11,7 @@ import FoundationNetworking
 #endif
 import GEOSwift
 
-public struct NationalWeatherService {
+public class NationalWeatherService {
     // Definitions
     public typealias GeoJSONHandler = (Result<GeoJSON, Error>) -> Void
 
