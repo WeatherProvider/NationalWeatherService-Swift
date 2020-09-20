@@ -15,6 +15,9 @@ public class NationalWeatherService {
     // Definitions
     public typealias GeoJSONHandler = (Result<GeoJSON, Error>) -> Void
 
+    /// The name of the environment variable for reading the user agent.
+    public static let UserAgentEnvironmentVariableKey = "NATIONAL_WEATHER_SERVICE_USER_AGENT"
+
     private let decoder: JSONDecoder = {
         let _decoder = JSONDecoder()
         _decoder.dateDecodingStrategy = .iso8601
@@ -27,6 +30,20 @@ public class NationalWeatherService {
     let session: URLSession = URLSession(configuration: .ephemeral)
 
     let userAgent: String
+
+    /// Initializes using the environment variable as the user agent. If you do not want to use an environment variable, use `init(userAgent:_)` instead.
+    ///
+    /// A User Agent is required to identify your application. This string should be contact information (e.g. website or email) in case of a security event.
+    /// See [weather.gov reference](https://www.weather.gov/documentation/services-web-api).
+    /// Example string: `"(myweatherapp.com, contact@myweatherapp.com)"`
+    /// - precondition: Environment variable `NATIONAL_WEATHER_SERVICE_USER_AGENT` is not an empty String.
+    public init() {
+        guard let userAgent = ProcessInfo.processInfo.environment[NationalWeatherService.UserAgentEnvironmentVariableKey] else {
+            preconditionFailure("Missing \"\(NationalWeatherService.UserAgentEnvironmentVariableKey)\" environment variable. Use `init(userAgent:_)` if you do not want to specify environment variable.")
+        }
+
+        self.init(userAgent: userAgent)
+    }
 
     /// - parameter userAgent: A User Agent is required to identify your application. This string should be contact information (e.g. website or email) in case of a security event. See [weather.gov reference](https://www.weather.gov/documentation/services-web-api). Example string: `"(myweatherapp.com, contact@myweatherapp.com)"`
     /// - precondition: `userAgent` is not an empty String.
