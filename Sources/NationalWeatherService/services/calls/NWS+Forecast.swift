@@ -13,7 +13,7 @@ extension NationalWeatherService {
     fileprivate func loadForecast(at url: URL, then handler: @escaping ForecastHandler) {
         var components = URLComponents(url: url, resolvingAgainstBaseURL: false)!
         components.queryItems = [
-            URLQueryItem(name: "units", value: "si")
+            //URLQueryItem(name: "units", value: "si")
         ]
 
         self.load(at: components.url!, as: Forecast.self, then: handler)
