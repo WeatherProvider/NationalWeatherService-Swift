@@ -73,7 +73,7 @@ For more details on the API, see https://www.weather.gov/documentation/services-
 This Swift library is licensed under the MIT license.
 
 ```
-Copyright © 2020 Alan Chu
+Copyright © 2020-2022 Alan Chu
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of 
 this software and associated documentation files (the "Software"), to deal in 
