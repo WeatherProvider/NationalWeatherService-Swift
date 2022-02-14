@@ -8,13 +8,14 @@
 import Foundation
 
 extension Forecast {
-    public struct Period: Decodable {
+    public struct Period: Decodable, Identifiable {
         public enum CodingKeys: String, CodingKey {
             case name, startTime, endTime, isDaytime
             case temperature, temperatureUnit, windSpeed, windDirection
             case icon, shortForecast, detailedForecast
         }
 
+        public let id = UUID()
         public let name: String?
         public let date: DateInterval
         public let isDaytime: Bool

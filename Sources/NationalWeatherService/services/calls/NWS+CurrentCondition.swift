@@ -39,7 +39,7 @@ import CoreLocation
 extension NationalWeatherService {
     /// Gets the current weather for the given location.
     public func currentCondition(for coordinates: CLLocationCoordinate2D, then handler: @escaping CurrentConditionHandler) {
-        self.currentCondition(latitude: coordinates.latitude, longitude: coordinates.latitude, then: handler)
+        self.currentCondition(latitude: coordinates.latitude, longitude: coordinates.longitude, then: handler)
     }
 
     /// Gets the current weather for the given location.
