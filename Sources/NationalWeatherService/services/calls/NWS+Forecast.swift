@@ -10,10 +10,16 @@ import Foundation
 extension NationalWeatherService {
     public typealias ForecastHandler = (Result<Forecast, Error>) -> Void
 
+    /// Allow API customers to set the [UnitTemperature](https://developer.apple.com/documentation/foundation/unittemperature)
+    /// to get ["*US customary or SI (metric) units in textual output*"](https://www.weather.gov/documentation/services-web-api#/default/gridpoint_forecast)
+    public static var units: UnitTemperature = .celsius
+    
     fileprivate func loadForecast(at url: URL, then handler: @escaping ForecastHandler) {
         var components = URLComponents(url: url, resolvingAgainstBaseURL: false)!
+
+        let units: String = NationalWeatherService.units == .celsius ? "si" : "us"
         components.queryItems = [
-            URLQueryItem(name: "units", value: "si")
+            URLQueryItem(name: "units", value: units)
         ]
 
         self.load(at: components.url!, as: Forecast.self, then: handler)
