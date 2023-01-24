@@ -6,11 +6,17 @@
 
 A Swift wrapper for the National Weather Service's weather.gov free-to-use public API.
 
+
 ## Platforms
 | Platform | CI |
 | :------- | :- |
 | Apple    | [![Apple](https://github.com/WeatherProvider/NationalWeatherService-Swift/workflows/Apple/badge.svg)](https://github.com/WeatherProvider/NationalWeatherService-Swift/actions?query=workflow%3AApple) |
 | Linux (Ubuntu & Amazon) | [![Linux](https://github.com/ualch9/NationalWeatherService-Swift/workflows/Linux/badge.svg)](https://github.com/WeatherProvider/NationalWeatherService-Swift/actions?query=workflow%3ALinux) |
+
+
+| ⚠️ LINUX SUPPORT ENDING | 
+| :-- |
+| Linux & AWS support is planned to be dropped in release 0.5. See [#12](https://github.com/WeatherProvider/NationalWeatherService-Swift/issues/12). |
 
 ### Contributing
 - For Apple-platforms, use Xcode 12. Make sure to test on iOS and macOS.
